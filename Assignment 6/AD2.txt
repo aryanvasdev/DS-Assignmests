@@ -12,71 +12,72 @@ bool hasEvenParity(int n) {
     return (count % 2 == 0); 
 }
 void removeEvenNodes() {
-        Node* temp = head;
-        while (temp != NULL) {
-            Node* nextNode = temp->next; 
+    Node* temp = head;
+    while (temp != NULL) {
+        Node* nextNode = temp->next; 
 
-            if (temp->data % 2 == 0) {
-                if (temp->prev != NULL) {
-                    temp->prev->next = temp->next;
-                }
-                
-                if (temp->next != NULL) {
-                    temp->next->prev = temp->prev;
-                }
-                
-                if (temp == head) {
-                    head = temp->next;
-                }
-                
-                delete temp;
+        if (hasEvenParity(temp->data)) { 
+            if (temp->prev != NULL) {
+                temp->prev->next = temp->next;
             }
-            temp = nextNode; 
+            
+            if (temp->next != NULL) {
+                temp->next->prev = temp->prev;
+            }
+            
+            if (temp == head) {
+                head = temp->next;
+            }
+            
+            delete temp;
         }
+        temp = nextNode; 
     }
+}
 
 void removeEvenNodes() {
-        if (last == NULL) {
-            return;
+    if (last == NULL) {
+        return;
+    }
+
+    Node* curr = last->next; 
+    Node* prev = last;
+    Node* head = last->next; 
+
+    bool headProcessed = false;
+    
+    if (curr->next == curr && hasEvenParity(curr->data)) {
+         delete curr;
+         last = NULL;
+         return;
+    }
+
+    while (true) {
+        if (curr == head && headProcessed) {
+            break; 
+        }
+        if (curr != head) {
+            headProcessed = true; 
         }
 
-        Node* curr = last->next; 
-        Node* prev = last;
-        Node* head = last->next; 
+        Node* nextNode = curr->next;
 
-        bool headProcessed = false;
-        if (curr->next == curr && curr->data % 2 == 0) {
-             delete curr;
-             last = NULL;
-             return;
-        }
+        if (hasEvenParity(curr->data)) {
+            prev->next = nextNode;
 
-        while (true) {
-            if (curr == head && headProcessed) {
-                break; 
+            if (curr == last->next) { 
+                last->next = nextNode;
+                head = nextNode; 
             }
-            if (curr != head) {
-                headProcessed = true; 
+            if (curr == last) { 
+                last = prev;
             }
-
-            Node* nextNode = curr->next;
-
-            if (curr->data % 2 == 0) {
-                prev->next = nextNode;
-
-                if (curr == last->next) { 
-                    last->next = nextNode;
-                    head = nextNode; 
-                }
-                if (curr == last) { 
-                    last = prev;
-                }
-                
-                delete curr;
-                curr = nextNode;
-            } else {
-                prev = curr;
-                curr = nextNode;
-            }
+            
+            delete curr;
+            curr = nextNode;
+        } else {
+            prev = curr;
+            curr = nextNode;
         }
     }
+}
