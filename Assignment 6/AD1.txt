@@ -1,0 +1,38 @@
+class Solution {
+  public:
+    pair<Node *, Node *> splitList(struct Node *head) {
+        // code here
+        if (head == NULL) {
+            return {NULL, NULL};
+        }
+
+        Node* head1 = head;
+        Node* head2 = NULL;
+
+        if (head->next == head) {
+            return {head, NULL};
+        }
+
+        Node* last = head;
+        int count = 1;
+        while (last->next != head) {
+            last = last->next;
+            count++;
+        }
+
+        int firstListSize = (count + 1) / 2;
+
+        Node* mid = head;
+        for (int i = 0; i < firstListSize - 1; i++) {
+            mid = mid->next;
+        }
+
+        head2 = mid->next;
+
+        last->next = head2;
+        
+        mid->next = head1;
+
+        return {head1, head2};
+    }
+};

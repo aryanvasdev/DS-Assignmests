@@ -1,0 +1,62 @@
+void insertAtEnd(Node*& head, int coeff, int power) {
+    Node* newNode = new Node(coeff, power);
+    if (head == NULL) {
+        head = newNode;
+        return;
+    }
+    Node* temp = head;
+    while (temp->next != NULL) {
+        temp = temp->next;
+    }
+    temp->next = newNode;
+}
+
+Node* addPolynomials(Node* head1, Node* head2) {
+    Node* resultHead = NULL;
+    Node* resultTail = NULL;
+    
+    Node* ptr1 = head1;
+    Node* ptr2 = head2;
+
+    while (ptr1 != NULL || ptr2 != NULL) {
+        int c, p;
+
+        if (ptr1 != NULL && ptr2 != NULL) {
+            if (ptr1->power > ptr2->power) {
+                c = ptr1->coeff;
+                p = ptr1->power;
+                ptr1 = ptr1->next;
+            } else if (ptr1->power < ptr2->power) {
+                c = ptr2->coeff;
+                p = ptr2->power;
+                ptr2 = ptr2->next;
+            } else {
+                c = ptr1->coeff + ptr2->coeff;
+                p = ptr1->power;
+                ptr1 = ptr1->next;
+                ptr2 = ptr2->next;
+                
+                if (c == 0) continue; 
+            }
+        } else if (ptr1 != NULL) {
+            c = ptr1->coeff;
+            p = ptr1->power;
+            ptr1 = ptr1->next;
+        } else if (ptr2 != NULL) {
+            c = ptr2->coeff;
+            p = ptr2->power;
+            ptr2 = ptr2->next;
+        }
+
+        Node* newNode = new Node(c, p);
+        if (resultHead == NULL) {
+            resultHead = newNode;
+            resultTail = newNode;
+        } else {
+            resultTail->next = newNode;
+            resultTail = newNode;
+        }
+    }
+    
+    return resultHead;
+}

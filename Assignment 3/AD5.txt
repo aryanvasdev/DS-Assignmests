@@ -1,0 +1,30 @@
+bool checkSortable(int A[], int n) {
+        stack<int> S;
+        int expected = 1; 
+
+        for (int i = 0; i < n; i++) {
+            int element = A[i];
+            
+            if (element == expected) {
+                expected++;
+                
+                while (!S.empty() && S.top() == expected) {
+                    S.pop(); 
+                    expected++;
+                }
+            } else {
+                S.push(element);
+            }
+        }
+
+        while (!S.empty()) {
+            if (S.top() == expected) {
+                S.pop();
+                expected++;
+            } else {
+                return false;
+            }
+        }
+        
+        return true;
+    }

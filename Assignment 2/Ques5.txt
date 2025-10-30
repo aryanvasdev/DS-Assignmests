@@ -1,0 +1,5 @@
+Diagonal Matrix: Stores only the diagonal in a 1D array of size n. 
+Tri-diagonal Matrix: Stores the three main diagonals in a 1D array of size 3n−2. 
+Lower Triangular Matrix: Stores all elements on and below the diagonal in a 1D array of size n(n+1)/2. 
+Upper Triangular Matrix: Stores all elements on and above the diagonal in a 1D array of size n(n+1)/2. 
+Symmetric Matrix: Stores only the lower (or upper) triangle in a 1D array of size n(n+1)/2.

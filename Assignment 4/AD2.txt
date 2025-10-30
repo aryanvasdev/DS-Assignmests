@@ -1,0 +1,36 @@
+#include <iostream>
+#include <queue>
+#include <climits> 
+
+using namespace std;
+
+void sortQueue(queue<int>& q) {
+    int n = q.size();
+
+    for (int i = 0; i < n; i++) {
+        
+        int min_val = INT_MAX;
+        for (int j = 0; j < (n - i); j++) {
+            int front = q.front();
+            q.pop();
+            if (front < min_val) {
+                min_val = front;
+            }
+            q.push(front);
+        }
+
+        bool min_removed = false;
+        for (int j = 0; j < n; j++) {
+            int front = q.front();
+            q.pop();
+            
+            if (front == min_val && !min_removed && j < (n - i)) {
+                min_removed = true; 
+            } else {
+                q.push(front); 
+            }
+        }
+        
+        q.push(min_val);
+    }
+}

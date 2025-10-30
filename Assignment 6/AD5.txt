@@ -1,0 +1,34 @@
+Node* constructList(vector<vector<int>>& matrix) {
+    int rows = matrix.size();
+    if (rows == 0) return NULL;
+    int cols = matrix[0].size();
+    if (cols == 0) return NULL;
+
+    vector<vector<Node*>> nodeGrid(rows, vector<Node*>(cols));
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            nodeGrid[i][j] = new Node(matrix[i][j]);
+        }
+    }
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            
+            if (j + 1 < cols) {
+                nodeGrid[i][j]->next = nodeGrid[i][j + 1];
+            }
+            if (j - 1 >= 0) {
+                nodeGrid[i][j]->prev = nodeGrid[i][j - 1];
+            }
+            if (i + 1 < rows) {
+                nodeGrid[i][j]->down = nodeGrid[i + 1][j];
+            }
+            if (i - 1 >= 0) {
+                nodeGrid[i][j]->up = nodeGrid[i - 1][j];
+            }
+        }
+    }
+
+    return nodeGrid[0][0];
+}

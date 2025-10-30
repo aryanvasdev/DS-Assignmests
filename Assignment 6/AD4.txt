@@ -1,0 +1,14 @@
+void correctList(Node* head) {
+    if (head == NULL) {
+        return;
+    }
+
+    Node* prevNode = NULL;
+    Node* currentNode = head;
+
+    while (currentNode != NULL) {
+        currentNode->prev = prevNode;
+        prevNode = currentNode;
+        currentNode = currentNode->next;
+    }
+}

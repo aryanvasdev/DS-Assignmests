@@ -1,0 +1,32 @@
+Node* reverseKGroup(Node* head, int k) {
+    if (head == NULL) {
+        return NULL;
+    }
+
+    Node* current = head;
+    Node* newHead = NULL;
+    Node* nextNode = NULL;
+    int count = 0;
+
+    while (current != NULL && count < k) {
+        nextNode = current->next;
+        
+        Node* temp = current->prev;
+        current->prev = current->next;
+        current->next = temp;
+        
+        newHead = current;
+        current = nextNode;
+        count++;
+    }
+
+    if (nextNode != NULL) {
+        Node* reversedRest = reverseKGroup(nextNode, k);
+        head->next = reversedRest;
+        if (reversedRest != NULL) {
+            reversedRest->prev = head;
+        }
+    }
+
+    return newHead;
+}
